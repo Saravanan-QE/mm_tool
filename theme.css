@@ -779,3 +779,37 @@ footer.mm-footer {
   .mm-mobile-hide { display: none; }
   .mm-mobile-only { display: inline; }
 }
+
+/* ── Trust byline (author + last-updated), injected by modals.js ───────── */
+.mm-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 14px 0 4px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.mm-byline .mm-byline-sep { opacity: 0.5; }
+.mm-byline a { color: var(--emerald-3); text-decoration: none; font-weight: 600; }
+.mm-byline a:hover { text-decoration: underline; }
+.mm-byline .mm-verified { color: var(--emerald-2); font-weight: 600; }
+.mm-hero .mm-byline { justify-content: center; }
+
+/* Contextual in-content cross-links inside calculator copy */
+.mm-context-link { color: var(--emerald-3); text-decoration: underline; font-weight: 600; }
+
+/* About / editorial page prose */
+.mm-prose h2 { margin-top: 28px; }
+.mm-prose .mm-source-list li { margin-bottom: 8px; }
+.mm-team-card {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 16px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg-2); margin-bottom: 14px;
+}
+.mm-team-card .mm-avatar {
+  flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%;
+  background: var(--navy); color: #fff; display: flex; align-items: center;
+  justify-content: center; font-weight: 700; font-size: 1.1rem;
+}
