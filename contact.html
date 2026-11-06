@@ -99,11 +99,17 @@
             <div class="mm-contact-form">
                 <h2 style="text-align:center;margin-bottom:1.5rem">Send us a message</h2>
                 <form id="contactForm" onsubmit="return handleContactSubmit(event)">
-                    <label for="cfName">Your name</label>
+                    <label for="cfName">Your name *</label>
                     <input type="text" id="cfName" name="name" required placeholder="Full name">
 
-                    <label for="cfEmail">Email address</label>
+                    <label for="cfEmail">Email address *</label>
                     <input type="email" id="cfEmail" name="email" required placeholder="you@example.com">
+
+                    <label for="cfPhone">Phone number</label>
+                    <input type="tel" id="cfPhone" name="phone" placeholder="+91 98765 43210" pattern="[\+]?[0-9\s\-]{7,15}">
+
+                    <label for="cfCompany">Company / Business name</label>
+                    <input type="text" id="cfCompany" name="company" placeholder="Your business name (optional)">
 
                     <label for="cfSubject">Subject</label>
                     <select id="cfSubject" name="subject">
@@ -114,10 +120,11 @@
                         <option value="Other">Other</option>
                     </select>
 
-                    <label for="cfMessage">Message</label>
+                    <label for="cfMessage">Message *</label>
                     <textarea id="cfMessage" name="message" required placeholder="Tell us what's on your mind..."></textarea>
 
-                    <button type="submit">Send Message</button>
+                    <button type="submit" id="cfSubmitBtn">Send Message</button>
+                    <p id="cfStatus" style="text-align:center;margin-top:1rem;font-weight:600;display:none"></p>
                 </form>
             </div>
         </section>
@@ -168,20 +175,57 @@
     </footer>
 
     <script>
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUP784zh1p-F8PgsunZvzGX5hiLTyJlHflbDfrOREp586GtLTkpU1sAFIT030yrrjQ/exec';
+
     function handleContactSubmit(e) {
         e.preventDefault();
-        var name = document.getElementById('cfName').value;
-        var email = document.getElementById('cfEmail').value;
+        var btn = document.getElementById('cfSubmitBtn');
+        var status = document.getElementById('cfStatus');
+        var name = document.getElementById('cfName').value.trim();
+        var email = document.getElementById('cfEmail').value.trim();
+        var phone = document.getElementById('cfPhone').value.trim();
+        var company = document.getElementById('cfCompany').value.trim();
         var subject = document.getElementById('cfSubject').value;
-        var message = document.getElementById('cfMessage').value;
-        var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
-        var mailtoLink = 'mailto:supportmoneymindtool@gmail.com?subject=' +
-            encodeURIComponent(subject + ' — ' + name) +
-            '&body=' + encodeURIComponent(body);
-        window.location.href = mailtoLink;
-        if (typeof gtag === 'function') {
-            gtag('event', 'contact_form_submit', { event_category: 'engagement', event_label: subject });
-        }
+        var message = document.getElementById('cfMessage').value.trim();
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        status.style.display = 'none';
+
+        var payload = {
+            name: name,
+            email: email,
+            phone: phone,
+            company: company,
+            message: '[' + subject + '] ' + message,
+            source: 'MM-tool - Website Contact Form'
+        };
+
+        fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function() {
+            status.textContent = 'Message sent successfully! We will get back to you within 24-48 hours.';
+            status.style.color = 'var(--emerald-3)';
+            status.style.display = 'block';
+            document.getElementById('contactForm').reset();
+            if (typeof gtag === 'function') {
+                gtag('event', 'contact_form_submit', { event_category: 'engagement', event_label: subject });
+            }
+        })
+        .catch(function() {
+            status.textContent = 'Something went wrong. Please email us at supportmoneymindtool@gmail.com';
+            status.style.color = '#ef4444';
+            status.style.display = 'block';
+        })
+        .finally(function() {
+            btn.disabled = false;
+            btn.textContent = 'Send Message';
+        });
+
         return false;
     }
     </script>

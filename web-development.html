@@ -378,12 +378,21 @@
             });
         }
 
-        var subject = encodeURIComponent('Web Development Enquiry – ' + plan);
-        var body = encodeURIComponent(
-            'Name: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone +
-            '\nPlan: ' + plan + '\n\nMessage:\n' + (msg || '(none)')
-        );
-        window.open('mailto:supportmoneymindtool@gmail.com?subject=' + subject + '&body=' + body, '_self');
+        var payload = {
+            name: name,
+            email: email,
+            phone: phone,
+            company: '',
+            message: '[Web Dev – ' + plan + '] ' + (msg || '(no message)'),
+            source: 'MM-tool - Web Dev Enquiry'
+        };
+
+        fetch('https://script.google.com/macros/s/AKfycbyUP784zh1p-F8PgsunZvzGX5hiLTyJlHflbDfrOREp586GtLTkpU1sAFIT030yrrjQ/exec', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
 
         document.getElementById('leadForm').classList.add('hidden');
         document.getElementById('leadSuccess').classList.add('show');
