@@ -16,7 +16,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="In Hand Salary Calculator India 2026 - convert CTC to take-home pay after EPF, PT & TDS. Free FY 2026-27 tool with instant monthly breakup. Try now!">
-    <meta name="keywords" content="in hand salary calculator, CTC to salary calculator, salary calculator India, in hand salary calculator India 2026, take home salary calculator, CTC to take home calculator FY 2026-27, monthly salary calculator India, net salary calculator, gross to net salary calculator, how to calculate in hand salary India, CTC breakup calculator">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <meta name="author" content="MoneyMindTool">
     <title>In Hand Salary Calculator India 2026 - CTC to Take Home</title>
@@ -151,6 +150,7 @@
             <div class="label">Monthly In-Hand Salary</div>
             <div class="value" id="fvOut">—</div>
             <div class="subline" id="resultDetail"></div>
+            <button class="mm-share-btn" onclick="shareResult(this)" aria-label="Share result"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>Share Result</button>
         </section>
 
 
@@ -409,6 +409,25 @@
             document.getElementById('capEpf').checked = true;
             document.getElementById('resultsCard').classList.add('hidden');
         }
+    function shareResult(btn) {
+        var card = btn.closest('.mm-result-card');
+        var label = card.querySelector('.label');
+        var value = card.querySelector('.value') || card.querySelector('.results');
+        var subline = card.querySelector('.subline');
+        var parts = [];
+        if (label) parts.push(label.textContent.trim());
+        if (value) parts.push(value.textContent.trim().replace(/\s+/g, ' '));
+        if (subline && subline.textContent.trim()) parts.push(subline.textContent.trim());
+        var text = parts.join(' | ') + '\n\nCalculate yours free: ' + window.location.href;
+        if (navigator.share) {
+            navigator.share({ title: document.title, text: text }).catch(function() {});
+        } else {
+            navigator.clipboard.writeText(text).then(function() {
+                btn.textContent = 'Copied!';
+                setTimeout(function() { btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>Share Result'; }, 2000);
+            });
+        }
+    }
     </script>
 
 
