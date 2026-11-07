@@ -125,7 +125,7 @@
                 </div>
                 <div class="mm-field">
                     <label for="loanTenure">Loan Tenure (Years)</label>
-                    <input type="number" id="loanTenure" value="5" min="1" max="30" class="mm-input">
+                    <input type="number" id="loanTenure" value="5" min="1" max="30" step="1" class="mm-input">
                 </div>
                 <div class="mm-field">
                     <label for="loanType">Loan Type</label>
@@ -194,13 +194,13 @@
 
         <section class="mm-card">
             <h2>EMI Components — Principal vs Interest</h2>
-            <p>Every EMI has two parts: principal repayment and interest. In the early years of a loan, the interest component dominates — for a 20-year home loan at 8.5%, nearly 70% of the first year's EMI goes toward interest. As the outstanding balance reduces, the principal share increases.</p>
+            <p>Every EMI has two parts: principal repayment and interest. In the early years of a loan, the interest component dominates — for a 20-year home loan at 8.5%, about 81% of the first year's EMI goes toward interest. As the outstanding balance reduces, the principal share increases.</p>
             <div class="mm-table-wrap">
                 <table class="mm-table">
                     <thead><tr><th>Factor</th><th>Early EMIs</th><th>Later EMIs</th></tr></thead>
                     <tbody>
-                        <tr><td>Interest share</td><td>High (60-70%)</td><td>Low (10-20%)</td></tr>
-                        <tr><td>Principal share</td><td>Low (30-40%)</td><td>High (80-90%)</td></tr>
+                        <tr><td>Interest share</td><td>High (75-85%)</td><td>Low (10-20%)</td></tr>
+                        <tr><td>Principal share</td><td>Low (15-25%)</td><td>High (80-90%)</td></tr>
                         <tr><td>Impact of prepayment</td><td>Maximum savings</td><td>Moderate savings</td></tr>
                         <tr><td>Outstanding balance</td><td>Reduces slowly</td><td>Reduces quickly</td></tr>
                     </tbody>
@@ -387,7 +387,9 @@
 
             var P = parseFloat(document.getElementById('loanAmount').value);
             var annualRate = parseFloat(document.getElementById('interestRate').value);
-            var years = parseFloat(document.getElementById('loanTenure').value);
+            var years = Math.round(parseFloat(document.getElementById('loanTenure').value));
+            if (years < 1) years = 1;
+            document.getElementById('loanTenure').value = years;
             var loanType = document.getElementById('loanType').value;
             var r = annualRate / 12 / 100;
             var n = years * 12;

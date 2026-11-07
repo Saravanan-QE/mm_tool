@@ -374,9 +374,6 @@
 
             var quantity = investment / buyPrice;
             var currentValue = quantity * currentPrice;
-            var absoluteReturn = ((currentValue - investment) / investment) * 100;
-            var cagr = (Math.pow(currentValue / investment, 1 / years) - 1) * 100;
-
             var totalValue = currentValue;
             var interestEarned = 0;
             var noteEl = document.getElementById('typeNote');
@@ -406,6 +403,7 @@
                 noteEl.innerHTML = '<strong>Note:</strong> Digital gold has a buy/sell spread of 2-3%. Factor this into your effective cost and returns.';
             }
 
+            var absoluteReturn = ((totalValue - investment) / investment) * 100;
             var effectiveCagr = (Math.pow(totalValue / investment, 1 / years) - 1) * 100;
 
             var resultsCard = document.getElementById('resultsCard');
