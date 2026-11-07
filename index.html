@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
-    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-GYW0708DQY"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYW0708DQY"></script>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="UE5/pVdJlriCJfcPDhvrWA" async></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -405,5 +405,19 @@
         <p class="mm-copyright">© 2026 DigiCreature Technologies. All Rights Reserved.</p>
     </footer>
 
+    <script>
+    document.querySelectorAll('.mm-calc-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            var name = card.querySelector('h3');
+            if (typeof gtag === 'function' && name) {
+                gtag('event', 'select_calculator', {
+                    event_category: 'engagement',
+                    calculator_name: name.textContent.trim(),
+                    link_url: card.getAttribute('href')
+                });
+            }
+        });
+    });
+    </script>
 </body>
 </html>
