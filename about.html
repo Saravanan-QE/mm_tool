@@ -7,7 +7,22 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-        gtag('config', 'G-GYW0708DQY');
+        if (/(^|\.)moneymindtool\.com$/.test(location.hostname)) {
+            gtag('config', 'G-GYW0708DQY');
+            (function () {
+                var sent = false, page = location.pathname;
+                function calc() { if (!sent) { sent = true; gtag('event', 'calculate', { calculator: page }); } }
+                document.addEventListener('click', function (e) {
+                    var b = e.target.closest('button, a');
+                    if (!b) return;
+                    if (b.classList.contains('mm-share-btn')) gtag('event', 'share', { calculator: page });
+                    else if (b.tagName === 'BUTTON' && /^\s*(calculate|compute|estimate)\b/i.test(b.textContent)) calc();
+                });
+                document.addEventListener('change', function (e) {
+                    if (e.target.closest('main input, main select')) calc();
+                });
+            })();
+        }
     </script>
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
