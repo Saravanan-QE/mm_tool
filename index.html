@@ -19,7 +19,7 @@
                     else if (b.tagName === 'BUTTON' && /^\s*(calculate|compute|estimate)\b/i.test(b.textContent)) calc();
                 });
                 document.addEventListener('change', function (e) {
-                    if (e.target.closest('main input, main select')) calc();
+                    if (e.target.closest('main input, main select') && !e.target.closest('form')) calc();
                 });
             })();
         }
